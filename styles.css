@@ -1,0 +1,539 @@
+/* 基础样式重置和全局设置 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+    color: #333;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+}
+
+/* 头部样式 */
+header {
+    text-align: center;
+    padding: 2rem 1rem;
+    color: white;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+header h1 {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+header p {
+    font-size: 1.2rem;
+    opacity: 0.9;
+}
+
+/* 导航栏样式 */
+nav {
+    background: rgba(255, 255, 255, 0.95);
+    padding: 1rem;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+nav ul {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    list-style: none;
+    gap: 1rem;
+}
+
+nav ul li {
+    margin: 0;
+}
+
+.nav-btn {
+    display: inline-block;
+    padding: 0.8rem 1.5rem;
+    text-decoration: none;
+    color: #333;
+    background: linear-gradient(45deg, #ff6b6b, #feca57);
+    border-radius: 25px;
+    transition: all 0.3s ease;
+    font-weight: 600;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.nav-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+    background: linear-gradient(45deg, #ff5252, #ffca28);
+}
+
+.nav-btn.active {
+    background: linear-gradient(45deg, #4facfe, #00f2fe);
+    color: white;
+}
+
+/* 主要内容区域 */
+main {
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+}
+
+/* 演示section样式 */
+.demo-section {
+    display: none;
+    background: white;
+    border-radius: 15px;
+    padding: 2rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    animation: fadeIn 0.5s ease-in;
+}
+
+.demo-section.active {
+    display: block;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.demo-section h2 {
+    color: #2c3e50;
+    margin-bottom: 1rem;
+    font-size: 2rem;
+    text-align: center;
+    border-bottom: 3px solid #3498db;
+    padding-bottom: 0.5rem;
+}
+
+.concept-intro {
+    background: linear-gradient(135deg, #74b9ff, #0984e3);
+    color: white;
+    padding: 1.5rem;
+    border-radius: 10px;
+    margin-bottom: 2rem;
+    text-align: center;
+    font-size: 1.1rem;
+}
+
+.visualization {
+    margin-top: 2rem;
+}
+
+.visualization h3 {
+    color: #2c3e50;
+    margin-bottom: 1.5rem;
+    text-align: center;
+    font-size: 1.5rem;
+}
+
+/* 神经网络演示样式 */
+.neural-network-demo {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin: 2rem 0;
+    padding: 2rem;
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    border-radius: 15px;
+    color: white;
+    min-height: 300px;
+}
+
+.layer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}
+
+.layer h4 {
+    margin-bottom: 1rem;
+    font-size: 1.2rem;
+    text-align: center;
+}
+
+.neuron {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: radial-gradient(circle, #fff, #ddd);
+    color: #333;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.neuron:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+}
+
+.neuron.active {
+    background: radial-gradient(circle, #4facfe, #00f2fe);
+    color: white;
+    animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+}
+
+/* 机器学习演示样式 */
+.ml-demo {
+    text-align: center;
+    background: #f8f9fa;
+    padding: 2rem;
+    border-radius: 15px;
+}
+
+#regression-canvas {
+    border: 2px solid #3498db;
+    border-radius: 10px;
+    background: white;
+    margin-bottom: 1rem;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.metrics {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 1rem;
+    font-weight: bold;
+}
+
+.metrics p {
+    background: linear-gradient(45deg, #667eea, #764ba2);
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+}
+
+/* 深度学习演示样式 */
+.cnn-demo {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    padding: 2rem;
+    border-radius: 15px;
+    color: white;
+    min-height: 250px;
+    overflow-x: auto;
+}
+
+.cnn-layer {
+    text-align: center;
+    flex: 1;
+    margin: 0 1rem;
+}
+
+.cnn-layer h4 {
+    margin-bottom: 1rem;
+    font-size: 1.1rem;
+}
+
+.image-placeholder, .filter-demo, .pooling-demo, .fc-demo {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 10px;
+    padding: 1rem;
+    min-height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.pixel-grid {
+    display: grid;
+    grid-template-columns: repeat(8, 15px);
+    gap: 2px;
+}
+
+.pixel-grid::before {
+    content: '';
+    display: block;
+    width: 15px;
+    height: 15px;
+    background: #fff;
+    border-radius: 2px;
+}
+
+.filter, .feature-map, .classification {
+    background: rgba(255, 255, 255, 0.3);
+    padding: 0.5rem;
+    margin: 0.25rem;
+    border-radius: 5px;
+    font-size: 0.9rem;
+}
+
+/* NLP演示样式 */
+.nlp-demo {
+    background: #f8f9fa;
+    padding: 2rem;
+    border-radius: 15px;
+}
+
+#text-input {
+    width: 100%;
+    height: 100px;
+    padding: 1rem;
+    border: 2px solid #3498db;
+    border-radius: 10px;
+    font-size: 1rem;
+    margin-bottom: 1rem;
+    resize: vertical;
+}
+
+.sentiment-result {
+    margin: 2rem 0;
+}
+
+.sentiment-bar {
+    display: flex;
+    height: 40px;
+    border-radius: 20px;
+    overflow: hidden;
+    margin: 1rem 0;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.positive-bar {
+    background: linear-gradient(45deg, #55a3ff, #00c6ff);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    transition: width 0.5s ease;
+}
+
+.negative-bar {
+    background: linear-gradient(45deg, #ff6b6b, #ee5a52);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    transition: width 0.5s ease;
+}
+
+.keywords {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 1rem;
+}
+
+.keyword {
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-weight: bold;
+    color: white;
+}
+
+.keyword.positive {
+    background: linear-gradient(45deg, #55a3ff, #00c6ff);
+}
+
+.keyword.negative {
+    background: linear-gradient(45deg, #ff6b6b, #ee5a52);
+}
+
+.keyword.neutral {
+    background: linear-gradient(45deg, #95a5a6, #7f8c8d);
+}
+
+/* 计算机视觉演示样式 */
+.cv-demo {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    background: #f8f9fa;
+    padding: 2rem;
+    border-radius: 15px;
+}
+
+.upload-area {
+    border: 3px dashed #3498db;
+    border-radius: 10px;
+    padding: 2rem;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background: white;
+}
+
+.upload-area:hover {
+    border-color: #2980b9;
+    background: #ecf0f1;
+}
+
+.predictions {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.prediction {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.label {
+    min-width: 60px;
+    font-weight: bold;
+}
+
+.confidence-bar {
+    flex: 1;
+    height: 25px;
+    background: #ecf0f1;
+    border-radius: 12px;
+    overflow: hidden;
+    position: relative;
+}
+
+.confidence {
+    height: 100%;
+    background: linear-gradient(45deg, #4facfe, #00f2fe);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: bold;
+    font-size: 0.9rem;
+    transition: width 0.5s ease;
+}
+
+/* 按钮样式 */
+.controls {
+    text-align: center;
+    margin: 2rem 0;
+}
+
+button {
+    background: linear-gradient(45deg, #667eea, #764ba2);
+    color: white;
+    border: none;
+    padding: 0.8rem 2rem;
+    border-radius: 25px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    margin: 0.5rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+    background: linear-gradient(45deg, #5a67d8, #667eea);
+}
+
+button:active {
+    transform: translateY(0);
+}
+
+/* 页脚样式 */
+footer {
+    text-align: center;
+    padding: 2rem;
+    color: white;
+    background: rgba(0, 0, 0, 0.1);
+    margin-top: 3rem;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+    header h1 {
+        font-size: 2rem;
+    }
+    
+    nav ul {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .neural-network-demo {
+        flex-direction: column;
+        gap: 2rem;
+    }
+    
+    .cnn-demo {
+        flex-direction: column;
+        gap: 1rem;
+    }
+    
+    .cv-demo {
+        grid-template-columns: 1fr;
+    }
+    
+    .demo-section {
+        padding: 1rem;
+        margin: 1rem 0;
+    }
+    
+    main {
+        padding: 0 0.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    header {
+        padding: 1rem 0.5rem;
+    }
+    
+    header h1 {
+        font-size: 1.8rem;
+    }
+    
+    .nav-btn {
+        padding: 0.6rem 1rem;
+        font-size: 0.9rem;
+    }
+    
+    .demo-section h2 {
+        font-size: 1.5rem;
+    }
+    
+    .concept-intro {
+        padding: 1rem;
+        font-size: 1rem;
+    }
+}
+
+/* 动画和过渡效果 */
+.loading {
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+.highlight {
+    animation: highlight 2s ease-in-out;
+}
+
+@keyframes highlight {
+    0%, 100% { background-color: transparent; }
+    50% { background-color: rgba(255, 255, 0, 0.3); }
+} 

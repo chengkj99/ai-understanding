@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI 概念理解 - 交互式演示</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>🤖 AI 概念理解</h1>
+        <p>通过交互式演示学习人工智能基础概念</p>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="#neural-network" class="nav-btn" data-section="neural-network">神经网络</a></li>
+            <li><a href="#machine-learning" class="nav-btn" data-section="machine-learning">机器学习</a></li>
+            <li><a href="#deep-learning" class="nav-btn" data-section="deep-learning">深度学习</a></li>
+            <li><a href="#nlp" class="nav-btn" data-section="nlp">自然语言处理</a></li>
+            <li><a href="#computer-vision" class="nav-btn" data-section="computer-vision">计算机视觉</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <!-- 神经网络演示 -->
+        <section id="neural-network" class="demo-section active">
+            <h2>神经网络 (Neural Network)</h2>
+            <div class="concept-intro">
+                <p>神经网络是模仿人脑神经元结构的计算模型，由多个相互连接的节点组成。</p>
+            </div>
+            
+            <div class="visualization">
+                <h3>简单神经网络可视化</h3>
+                <div class="neural-network-demo">
+                    <div class="layer input-layer">
+                        <h4>输入层</h4>
+                        <div class="neuron" data-value="0.8">
+                            <span class="neuron-value">0.8</span>
+                        </div>
+                        <div class="neuron" data-value="0.3">
+                            <span class="neuron-value">0.3</span>
+                        </div>
+                        <div class="neuron" data-value="0.6">
+                            <span class="neuron-value">0.6</span>
+                        </div>
+                    </div>
+                    
+                    <div class="layer hidden-layer">
+                        <h4>隐藏层</h4>
+                        <div class="neuron" data-value="0.7">
+                            <span class="neuron-value">0.7</span>
+                        </div>
+                        <div class="neuron" data-value="0.4">
+                            <span class="neuron-value">0.4</span>
+                        </div>
+                    </div>
+                    
+                    <div class="layer output-layer">
+                        <h4>输出层</h4>
+                        <div class="neuron" data-value="0.9">
+                            <span class="neuron-value">0.9</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="controls">
+                    <button id="forward-pass">前向传播</button>
+                    <button id="reset-network">重置网络</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- 机器学习演示 -->
+        <section id="machine-learning" class="demo-section">
+            <h2>机器学习 (Machine Learning)</h2>
+            <div class="concept-intro">
+                <p>机器学习是让计算机通过数据学习规律，无需明确编程即可做出预测或决策。</p>
+            </div>
+            
+            <div class="visualization">
+                <h3>线性回归演示</h3>
+                <div class="ml-demo">
+                    <canvas id="regression-canvas" width="500" height="400"></canvas>
+                    <div class="controls">
+                        <button id="add-point">添加数据点</button>
+                        <button id="train-model">训练模型</button>
+                        <button id="clear-points">清除数据</button>
+                    </div>
+                    <div class="metrics">
+                        <p>训练进度: <span id="training-progress">0%</span></p>
+                        <p>误差: <span id="error-rate">N/A</span></p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 深度学习演示 -->
+        <section id="deep-learning" class="demo-section">
+            <h2>深度学习 (Deep Learning)</h2>
+            <div class="concept-intro">
+                <p>深度学习使用多层神经网络来学习数据的复杂模式，是机器学习的一个子集。</p>
+            </div>
+            
+            <div class="visualization">
+                <h3>卷积神经网络 (CNN) 结构</h3>
+                <div class="cnn-demo">
+                    <div class="cnn-layer">
+                        <h4>输入图像</h4>
+                        <div class="image-placeholder">
+                            <div class="pixel-grid">
+                                <!-- 像素格子将通过JS生成 -->
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="cnn-layer">
+                        <h4>卷积层</h4>
+                        <div class="filter-demo">
+                            <div class="filter">滤波器 1</div>
+                            <div class="filter">滤波器 2</div>
+                            <div class="filter">滤波器 3</div>
+                        </div>
+                    </div>
+                    
+                    <div class="cnn-layer">
+                        <h4>池化层</h4>
+                        <div class="pooling-demo">
+                            <div class="feature-map">特征图 1</div>
+                            <div class="feature-map">特征图 2</div>
+                        </div>
+                    </div>
+                    
+                    <div class="cnn-layer">
+                        <h4>全连接层</h4>
+                        <div class="fc-demo">
+                            <div class="classification">分类结果</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="controls">
+                    <button id="simulate-cnn">模拟CNN处理</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- 自然语言处理演示 -->
+        <section id="nlp" class="demo-section">
+            <h2>自然语言处理 (NLP)</h2>
+            <div class="concept-intro">
+                <p>自然语言处理让计算机理解、解释和生成人类语言。</p>
+            </div>
+            
+            <div class="visualization">
+                <h3>文本情感分析</h3>
+                <div class="nlp-demo">
+                    <textarea id="text-input" placeholder="输入一段文本进行情感分析...">我今天心情很好，这个项目很有趣！</textarea>
+                    <button id="analyze-sentiment">分析情感</button>
+                    
+                    <div class="sentiment-result">
+                        <div class="sentiment-bar">
+                            <div class="positive-bar" style="width: 70%">
+                                <span>积极 70%</span>
+                            </div>
+                            <div class="negative-bar" style="width: 30%">
+                                <span>消极 30%</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="word-analysis">
+                        <h4>关键词分析</h4>
+                        <div class="keywords">
+                            <span class="keyword positive">好</span>
+                            <span class="keyword positive">有趣</span>
+                            <span class="keyword neutral">今天</span>
+                            <span class="keyword neutral">项目</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 计算机视觉演示 -->
+        <section id="computer-vision" class="demo-section">
+            <h2>计算机视觉 (Computer Vision)</h2>
+            <div class="concept-intro">
+                <p>计算机视觉让机器能够识别和理解图像中的内容。</p>
+            </div>
+            
+            <div class="visualization">
+                <h3>图像识别演示</h3>
+                <div class="cv-demo">
+                    <div class="image-upload">
+                        <div class="upload-area" id="upload-area">
+                            <p>点击或拖拽上传图像</p>
+                            <input type="file" id="image-input" accept="image/*" style="display: none;">
+                        </div>
+                        <img id="preview-image" style="display: none; max-width: 300px;">
+                    </div>
+                    
+                    <div class="recognition-results">
+                        <h4>识别结果</h4>
+                        <div class="predictions">
+                            <div class="prediction">
+                                <span class="label">猫</span>
+                                <div class="confidence-bar">
+                                    <div class="confidence" style="width: 85%">85%</div>
+                                </div>
+                            </div>
+                            <div class="prediction">
+                                <span class="label">狗</span>
+                                <div class="confidence-bar">
+                                    <div class="confidence" style="width: 12%">12%</div>
+                                </div>
+                            </div>
+                            <div class="prediction">
+                                <span class="label">鸟</span>
+                                <div class="confidence-bar">
+                                    <div class="confidence" style="width: 3%">3%</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 AI 概念理解项目 | 用于教育和学习目的</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html> 
