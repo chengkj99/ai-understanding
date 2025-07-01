@@ -1,0 +1,115 @@
+<div class="concept-page">
+  <div class="concept-header">
+    <h1>👁️ 计算机视觉</h1>
+    <p class="subtitle">让机器获得"看见"世界的能力</p>
+  </div>
+
+  <div class="concept-content">
+    <section id="theory" class="content-section">
+      <h2 class="section-title">
+        <span class="section-icon">📚</span>
+        理论基础
+      </h2>
+      <div class="theory-content">
+        <h3>什么是计算机视觉？</h3>
+        <p>计算机视觉是人工智能的一个领域，旨在让计算机获得类似人类视觉的能力，能够识别和理解图像中的内容。</p>
+        
+        <div class="highlight-box">
+          <h4>🎯 计算机视觉的主要任务</h4>
+          <ul>
+            <li><strong>图像分类</strong>：识别图像中的主要对象</li>
+            <li><strong>目标检测</strong>：定位并识别图像中的多个对象</li>
+            <li><strong>语义分割</strong>：对图像中的每个像素进行分类</li>
+            <li><strong>人脸识别</strong>：识别和验证人脸身份</li>
+          </ul>
+        </div>
+
+        <h3>核心技术</h3>
+        <p><strong>图像预处理</strong>：增强图像质量，提取有用信息</p>
+        <p><strong>特征提取</strong>：识别图像中的关键特征</p>
+        <p><strong>卷积神经网络</strong>：专门用于图像处理的深度学习架构</p>
+        <p><strong>迁移学习</strong>：利用预训练模型加速训练过程</p>
+      </div>
+    </section>
+
+    <section id="visualization" class="content-section">
+      <h2 class="section-title">
+        <span class="section-icon">🎨</span>
+        可视化演示
+      </h2>
+      <div class="visualization-container">
+        <div class="visualization-header">
+          <h3>图像识别演示</h3>
+          <p class="visualization-description">上传图像查看AI如何识别内容</p>
+        </div>
+        <div id="cv-demo" class="demo-area">
+          <div class="image-upload-area">
+            <div class="upload-zone" id="upload-zone">
+              <p>📷 点击或拖拽上传图像</p>
+              <input type="file" id="image-input" accept="image/*" style="display: none;">
+            </div>
+            <img id="preview-image" style="display: none; max-width: 300px;">
+          </div>
+          
+          <div class="recognition-results">
+            <h4>识别结果</h4>
+            <div class="predictions-list">
+              <div class="prediction-item">
+                <span class="prediction-label">🐱 猫</span>
+                <div class="confidence-bar">
+                  <div class="confidence-fill" style="width: 85%">85%</div>
+                </div>
+              </div>
+              <div class="prediction-item">
+                <span class="prediction-label">🐶 狗</span>
+                <div class="confidence-bar">
+                  <div class="confidence-fill" style="width: 12%">12%</div>
+                </div>
+              </div>
+              <div class="prediction-item">
+                <span class="prediction-label">🐦 鸟</span>
+                <div class="confidence-bar">
+                  <div class="confidence-fill" style="width: 3%">3%</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="controls">
+          <button class="btn btn-primary" id="recognize-btn">识别图像</button>
+          <button class="btn btn-secondary" id="clear-image-btn">清除图像</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="practice" class="content-section">
+      <h2 class="section-title">
+        <span class="section-icon">🎯</span>
+        实践练习
+      </h2>
+      <div class="practice-content">
+        <p>计算机视觉实践练习正在开发中...</p>
+      </div>
+    </section>
+
+    <section id="summary" class="content-section">
+      <h2 class="section-title">
+        <span class="section-icon">📝</span>
+        总结
+      </h2>
+      <div class="summary-content">
+        <div class="highlight-box">
+          <h4>🔑 关键要点</h4>
+          <ul>
+            <li>计算机视觉让机器"看见"世界</li>
+            <li>CNN是主要的技术架构</li>
+            <li>应用范围广泛：医疗、安防、自动驾驶</li>
+            <li>与其他AI技术结合创造更多可能</li>
+          </ul>
+        </div>
+        <p>计算机视觉正在改变我们的生活方式，从手机拍照到工业自动化都有重要应用。</p>
+      </div>
+    </section>
+  </div>
+</div>

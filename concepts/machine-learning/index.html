@@ -1,0 +1,140 @@
+<div class="concept-page">
+  <div class="concept-header">
+    <h1>📊 机器学习</h1>
+    <p class="subtitle">探索让计算机从数据中学习的神奇技术</p>
+  </div>
+
+  <div class="concept-content">
+    <!-- 理论基础部分 -->
+    <section id="theory" class="content-section">
+      <h2 class="section-title">
+        <span class="section-icon">📚</span>
+        理论基础
+      </h2>
+      <div class="theory-content">
+        <h3>什么是机器学习？</h3>
+        <p>机器学习是人工智能的一个子领域，它使计算机能够通过经验自动改进性能，而无需显式编程。</p>
+        
+        <div class="highlight-box">
+          <h4>🎯 机器学习类型</h4>
+          <ul>
+            <li><strong>监督学习</strong>：使用带标签的数据进行训练</li>
+            <li><strong>无监督学习</strong>：从无标签数据中发现模式</li>
+            <li><strong>强化学习</strong>：通过与环境交互学习最优策略</li>
+            <li><strong>半监督学习</strong>：结合少量标签数据和大量无标签数据</li>
+          </ul>
+        </div>
+
+        <h3>核心概念</h3>
+        <p><strong>训练数据</strong>：用于教导算法的数据集</p>
+        <p><strong>特征</strong>：数据的可测量属性或特征</p>
+        <p><strong>模型</strong>：算法学习到的数据模式</p>
+        <p><strong>预测</strong>：模型对新数据的推断结果</p>
+
+        <h3>常见算法</h3>
+        <ul>
+          <li><strong>线性回归</strong>：预测连续数值</li>
+          <li><strong>逻辑回归</strong>：二分类问题</li>
+          <li><strong>决策树</strong>：基于规则的分类和回归</li>
+          <li><strong>随机森林</strong>：多个决策树的集成</li>
+          <li><strong>支持向量机</strong>：寻找最优分类边界</li>
+          <li><strong>K-means</strong>：无监督聚类算法</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- 可视化演示部分 -->
+    <section id="visualization" class="content-section">
+      <h2 class="section-title">
+        <span class="section-icon">🎨</span>
+        可视化演示
+      </h2>
+      <div class="visualization-container">
+        <div class="visualization-header">
+          <h3>线性回归演示</h3>
+          <p class="visualization-description">观察模型如何学习数据中的线性关系</p>
+        </div>
+        
+        <div id="ml-demo" class="demo-area">
+          <canvas id="regression-canvas" width="500" height="400"></canvas>
+          <div class="training-info">
+            <p>训练状态: <span id="training-status">未开始</span></p>
+            <p>迭代次数: <span id="iterations">0</span></p>
+            <p>损失函数: <span id="loss-value">N/A</span></p>
+          </div>
+        </div>
+
+        <div class="controls">
+          <button class="btn btn-primary" id="add-data-btn">添加数据点</button>
+          <button class="btn btn-primary" id="train-model-btn">训练模型</button>
+          <button class="btn btn-secondary" id="clear-data-btn">清除数据</button>
+          <button class="btn btn-secondary" id="reset-model-btn">重置模型</button>
+        </div>
+
+        <div class="algorithm-selector">
+          <label for="algorithm-select">选择算法:</label>
+          <select id="algorithm-select">
+            <option value="linear">线性回归</option>
+            <option value="polynomial">多项式回归</option>
+            <option value="logistic">逻辑回归</option>
+          </select>
+        </div>
+      </div>
+    </section>
+
+    <!-- 实践练习部分 -->
+    <section id="practice" class="content-section">
+      <h2 class="section-title">
+        <span class="section-icon">🎯</span>
+        实践练习
+      </h2>
+      <div class="practice-content">
+        <div class="exercise-container">
+          <h3>练习1：房价预测</h3>
+          <p>使用房屋面积和房间数量预测房价</p>
+          <div class="exercise-placeholder">
+            <p>🏠 房价预测练习即将推出</p>
+          </div>
+        </div>
+
+        <div class="exercise-container">
+          <h3>练习2：客户分类</h3>
+          <p>根据购买行为对客户进行分类</p>
+          <div class="exercise-placeholder">
+            <p>👥 客户分类练习即将推出</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 总结部分 -->
+    <section id="summary" class="content-section">
+      <h2 class="section-title">
+        <span class="section-icon">📝</span>
+        总结
+      </h2>
+      <div class="summary-content">
+        <div class="highlight-box">
+          <h4>🔑 关键要点</h4>
+          <ul>
+            <li>机器学习让计算机从数据中自动学习</li>
+            <li>分为监督、无监督和强化学习三大类</li>
+            <li>模型训练是核心过程</li>
+            <li>特征工程对性能至关重要</li>
+            <li>过拟合和欠拟合是常见问题</li>
+          </ul>
+        </div>
+        <p>机器学习正在改变我们与技术的交互方式，从推荐系统到自动驾驶都有广泛应用。</p>
+        
+        <h3>🚀 实际应用</h3>
+        <ul>
+          <li><strong>推荐系统</strong>：Netflix、Amazon商品推荐</li>
+          <li><strong>搜索引擎</strong>：Google搜索排序算法</li>
+          <li><strong>金融风控</strong>：信用评分、欺诈检测</li>
+          <li><strong>医疗诊断</strong>：疾病预测、药物发现</li>
+          <li><strong>自动驾驶</strong>：路径规划、障碍物识别</li>
+        </ul>
+      </div>
+    </section>
+  </div>
+</div>
