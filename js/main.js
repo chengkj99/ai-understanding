@@ -9,7 +9,8 @@ const AppConfig = {
     { key: 'machine-learning', name: '机器学习', icon: '📊' },
     { key: 'deep-learning', name: '深度学习', icon: '🔍' },
     { key: 'nlp', name: '自然语言处理', icon: '💬' },
-    { key: 'computer-vision', name: '计算机视觉', icon: '👁️' }
+    { key: 'computer-vision', name: '计算机视觉', icon: '👁️' },
+    { key: 'transformer', name: 'Transformer', icon: '⚡' },
   ]
 };
 
@@ -125,11 +126,81 @@ class AIConceptApp {
     // 显示加载状态
     container.innerHTML = this.getLoadingHTML();
 
-    // 使用默认内容
-    container.innerHTML = this.getDefaultConceptHTML(concept);
+    try {
+      // 首先尝试从文件加载
+      const success = await this.loadConceptFromFile(concept, container);
+      
+      if (!success) {
+        // 如果文件加载失败，使用内置内容
+        console.log(`未找到 ${concept} 的文件，使用内置内容`);
+        container.innerHTML = this.getDefaultConceptHTML(concept);
+        
+        // 初始化内置概念的功能
+        await this.initializeConcept(concept, container);
+      }
+      
+    } catch (error) {
+      console.error(`加载概念内容失败: ${concept}`, error);
+      // 出错时回退到内置内容
+      container.innerHTML = this.getDefaultConceptHTML(concept);
+      await this.initializeConcept(concept, container);
+    }
+  }
 
-    // 初始化概念特定的功能
-    await this.initializeConcept(concept, container);
+  /**
+   * 从文件加载概念内容
+   */
+  async loadConceptFromFile(concept, container) {
+    try {
+      const response = await fetch(`concepts/${concept}/index.html`);
+      
+      if (!response.ok) {
+        return false;
+      }
+      
+      const htmlContent = await response.text();
+      
+      // 检查内容是否有效
+      if (!htmlContent.trim()) {
+        return false;
+      }
+      
+      // 设置内容
+      container.innerHTML = htmlContent;
+      
+      // 执行内容中的脚本
+      this.executeScripts(container);
+      
+      // 初始化概念特定功能
+      await this.initializeConcept(concept, container);
+      
+      console.log(`成功从文件加载 ${concept} 内容`);
+      return true;
+      
+    } catch (error) {
+      console.warn(`从文件加载 ${concept} 失败:`, error);
+      return false;
+    }
+  }
+
+  /**
+   * 执行容器中的脚本
+   */
+  executeScripts(container) {
+    const scripts = container.querySelectorAll('script');
+    scripts.forEach(script => {
+      if (script.textContent) {
+        try {
+          // 创建新的script元素并执行
+          const newScript = document.createElement('script');
+          newScript.textContent = script.textContent;
+          document.head.appendChild(newScript);
+          document.head.removeChild(newScript);
+        } catch (error) {
+          console.warn('执行脚本失败:', error);
+        }
+      }
+    });
   }
 
   /**
@@ -138,6 +209,63 @@ class AIConceptApp {
   async initializeConcept(concept, container) {
     // 使用内置的初始化逻辑
     this.initializeBuiltinConcept(concept, container);
+    
+    // 添加通用的交互功能
+    this.initializeCommonFeatures(container);
+  }
+
+  /**
+   * 初始化通用功能
+   */
+  initializeCommonFeatures(container) {
+    // 为所有按钮添加点击效果
+    const buttons = container.querySelectorAll('button, .btn');
+    buttons.forEach(button => {
+      if (!button.hasAttribute('data-initialized')) {
+        button.setAttribute('data-initialized', 'true');
+        button.addEventListener('click', (e) => {
+          // 添加点击动画效果
+          button.style.transform = 'scale(0.95)';
+          setTimeout(() => {
+            button.style.transform = '';
+          }, 150);
+        });
+      }
+    });
+
+    // 为代码块添加复制功能
+    const codeBlocks = container.querySelectorAll('pre code');
+    codeBlocks.forEach(block => {
+      if (!block.parentElement.querySelector('.copy-btn')) {
+        const copyBtn = document.createElement('button');
+        copyBtn.className = 'copy-btn';
+        copyBtn.innerHTML = '📋';
+        copyBtn.title = '复制代码';
+        copyBtn.style.cssText = `
+          position: absolute;
+          top: 0.5rem;
+          right: 0.5rem;
+          background: rgba(0,0,0,0.1);
+          border: none;
+          border-radius: 4px;
+          padding: 0.25rem 0.5rem;
+          cursor: pointer;
+          font-size: 0.8rem;
+        `;
+        
+        block.parentElement.style.position = 'relative';
+        block.parentElement.appendChild(copyBtn);
+        
+        copyBtn.addEventListener('click', () => {
+          navigator.clipboard.writeText(block.textContent).then(() => {
+            copyBtn.innerHTML = '✅';
+            setTimeout(() => {
+              copyBtn.innerHTML = '📋';
+            }, 2000);
+          });
+        });
+      }
+    });
   }
 
   /**
@@ -159,6 +287,9 @@ class AIConceptApp {
         break;
       case 'computer-vision':
         this.initializeComputerVision(container);
+        break;
+      case 'transformer':
+        this.initializeTransformer(container);
         break;
     }
   }
@@ -209,6 +340,12 @@ class AIConceptApp {
         behavior: 'smooth',
         block: 'start'
       });
+      
+      // 更新导航状态
+      document.querySelectorAll('.concept-nav-link').forEach(link => {
+        link.classList.remove('active');
+      });
+      document.querySelector(`[href="#${sectionId}"]`)?.classList.add('active');
     }
   }
 
@@ -401,7 +538,7 @@ class AIConceptApp {
                 <p class="visualization-description">交互式可视化帮助理解概念</p>
               </div>
               <div id="${concept}-demo" class="demo-area">
-                <!-- 演示内容将在这里加载 -->
+                <p class="demo-placeholder">🚧 可视化演示正在开发中...</p>
               </div>
             </div>
           </section>
@@ -412,7 +549,7 @@ class AIConceptApp {
               实践练习
             </h2>
             <div class="practice-content">
-              <p>实践练习功能即将推出...</p>
+              <p class="practice-placeholder">🎯 实践练习功能即将推出...</p>
             </div>
           </section>
 
@@ -528,6 +665,34 @@ class AIConceptApp {
         <p><strong>特征提取</strong>：识别图像中的关键特征</p>
         <p><strong>卷积神经网络</strong>：专门用于图像处理的深度学习架构</p>
         <p><strong>迁移学习</strong>：利用预训练模型加速训练过程</p>
+      `,
+      'transformer': `
+        <h3>什么是Transformer？</h3>
+        <p>Transformer是一种基于注意力机制的神经网络架构，彻底改变了自然语言处理和AI领域。</p>
+        
+        <div class="highlight-box">
+          <h4>🎯 核心创新</h4>
+          <ul>
+            <li><strong>自注意力机制</strong>：模型能关注输入序列的不同部分</li>
+            <li><strong>并行计算</strong>：不依赖序列顺序，可以并行处理</li>
+            <li><strong>位置编码</strong>：通过位置编码保留序列信息</li>
+            <li><strong>多头注意力</strong>：从多个角度理解输入</li>
+          </ul>
+        </div>
+
+        <h3>架构组成</h3>
+        <p><strong>编码器-解码器结构</strong>：编码器理解输入，解码器生成输出</p>
+        <p><strong>注意力层</strong>：Self-Attention和Cross-Attention机制</p>
+        <p><strong>前馈网络</strong>：对每个位置独立的全连接层</p>
+        <p><strong>残差连接</strong>：帮助训练深层网络，防止梯度消失</p>
+
+        <h3>关键优势</h3>
+        <ul>
+          <li><strong>长距离依赖</strong>：能够捕捉序列中远距离的关系</li>
+          <li><strong>训练效率</strong>：并行化训练大幅提升速度</li>
+          <li><strong>可解释性</strong>：注意力权重提供模型决策洞察</li>
+          <li><strong>可扩展性</strong>：易于扩展到大规模模型</li>
+        </ul>
       `
     };
 
@@ -595,6 +760,26 @@ class AIConceptApp {
           </ul>
         </div>
         <p>计算机视觉正在改变我们的生活方式，从手机拍照到工业自动化都有重要应用。</p>
+      `,
+      'transformer': `
+        <div class="highlight-box">
+          <h4>🔑 关键要点</h4>
+          <ul>
+            <li>Transformer革命性地改变了AI领域</li>
+            <li>注意力机制是核心创新</li>
+            <li>并行计算大幅提升训练效率</li>
+            <li>是GPT、BERT等大模型的基础架构</li>
+          </ul>
+        </div>
+        <p>Transformer不仅是现代NLP的基石，也正在扩展到计算机视觉、多模态等各个AI领域。</p>
+        
+        <h3>🌟 重要应用</h3>
+        <ul>
+          <li><strong>GPT系列</strong>：ChatGPT、GPT-4等大语言模型</li>
+          <li><strong>BERT</strong>：双向编码器表示</li>
+          <li><strong>Vision Transformer (ViT)</strong>：图像分类</li>
+          <li><strong>T5</strong>：文本到文本的统一框架</li>
+        </ul>
       `
     };
 
@@ -625,6 +810,107 @@ class AIConceptApp {
   initializeComputerVision(container) {
     console.log('初始化计算机视觉模块');
     // 这里会添加计算机视觉特定的交互功能
+  }
+
+  initializeTransformer(container) {
+    console.log('初始化Transformer模块');
+    
+    // 确保Transformer特定的JavaScript已经执行
+    const transformerDemo = container.querySelector('#transformer-demo');
+    if (transformerDemo) {
+      console.log('Transformer演示组件已加载');
+      
+      // 如果有特定的初始化逻辑，在这里执行
+      this.setupTransformerDemo(container);
+    }
+  }
+
+  /**
+   * 设置Transformer演示功能
+   */
+  setupTransformerDemo(container) {
+    // 检查是否有注意力机制演示
+    const attentionDemo = container.querySelector('#compute-attention');
+    if (attentionDemo && !attentionDemo.hasAttribute('data-initialized')) {
+      attentionDemo.setAttribute('data-initialized', 'true');
+      attentionDemo.addEventListener('click', () => {
+        console.log('计算注意力权重');
+        this.computeAttentionWeights(container);
+      });
+    }
+
+    // 检查是否有流程演示
+    const pipelineDemo = container.querySelector('#inputText');
+    if (pipelineDemo) {
+      console.log('Transformer流程演示已准备就绪');
+    }
+  }
+
+  /**
+   * 计算注意力权重演示
+   */
+  computeAttentionWeights(container) {
+    const attentionGrid = container.querySelector('#attention-grid');
+    if (!attentionGrid) return;
+
+    // 模拟生成注意力权重矩阵
+    const tokens = ['The', 'cat', 'sat', 'on', 'the', 'mat'];
+    const weights = [];
+    
+    // 生成随机注意力权重
+    for (let i = 0; i < tokens.length; i++) {
+      weights[i] = [];
+      for (let j = 0; j < tokens.length; j++) {
+        weights[i][j] = Math.random();
+      }
+      // 归一化
+      const sum = weights[i].reduce((a, b) => a + b, 0);
+      weights[i] = weights[i].map(w => w / sum);
+    }
+
+    // 渲染注意力矩阵
+    let matrixHTML = '<div class="attention-matrix-grid">';
+    for (let i = 0; i < tokens.length; i++) {
+      for (let j = 0; j < tokens.length; j++) {
+        const intensity = weights[i][j];
+        const opacity = intensity.toFixed(2);
+        matrixHTML += `
+          <div class="attention-cell" 
+               style="background: rgba(78, 140, 255, ${opacity}); opacity: ${opacity};"
+               title="${tokens[i]} → ${tokens[j]}: ${(intensity * 100).toFixed(1)}%">
+          </div>
+        `;
+      }
+    }
+    matrixHTML += '</div>';
+
+    attentionGrid.innerHTML = matrixHTML;
+
+    // 添加CSS样式
+    if (!document.querySelector('#attention-matrix-styles')) {
+      const style = document.createElement('style');
+      style.id = 'attention-matrix-styles';
+      style.textContent = `
+        .attention-matrix-grid {
+          display: grid;
+          grid-template-columns: repeat(6, 1fr);
+          gap: 2px;
+          max-width: 300px;
+          margin: 1rem auto;
+        }
+        .attention-cell {
+          aspect-ratio: 1;
+          border-radius: 4px;
+          transition: all 0.3s ease;
+          cursor: pointer;
+        }
+        .attention-cell:hover {
+          transform: scale(1.1);
+          border: 2px solid var(--accent-color);
+        }
+      `;
+      document.head.appendChild(style);
+    }
   }
 }
 

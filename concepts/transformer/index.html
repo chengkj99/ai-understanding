@@ -1,0 +1,514 @@
+<div class="concept-page">
+  <div class="concept-header">
+    <h1>⚡ Transformer</h1>
+    <p class="subtitle">革命性的注意力机制架构</p>
+  </div>
+
+  <div class="concept-content">
+    <section id="theory" class="content-section">
+      <h2 class="section-title">
+        <span class="section-icon">📚</span>
+        理论基础
+      </h2>
+      <div class="theory-content">
+        <h3>什么是Transformer？</h3>
+        <p>Transformer是2017年由Google提出的一种革命性神经网络架构，完全基于注意力机制，彻底改变了自然语言处理和AI领域。</p>
+        
+        <div class="highlight-box">
+          <h4>🎯 核心创新</h4>
+          <ul>
+            <li><strong>自注意力机制(Self-Attention)</strong>：模型能关注输入序列的不同部分</li>
+            <li><strong>并行计算</strong>：不依赖序列顺序，可以并行处理所有位置</li>
+            <li><strong>位置编码</strong>：通过数学编码保留序列的位置信息</li>
+            <li><strong>多头注意力</strong>：从多个角度同时理解输入信息</li>
+          </ul>
+        </div>
+
+        <h3>核心架构组成</h3>
+        <p><strong>编码器-解码器结构</strong>：编码器理解输入序列，解码器生成输出序列</p>
+        <p><strong>多头注意力层</strong>：包括Self-Attention和Cross-Attention机制</p>
+        <p><strong>前馈神经网络</strong>：对每个位置独立应用的全连接层</p>
+        <p><strong>残差连接与层归一化</strong>：帮助训练深层网络，防止梯度消失</p>
+
+        <h3>注意力机制原理</h3>
+        <div class="code-block">
+          <pre><code>Attention(Q,K,V) = softmax(QK^T/√d_k)V
+
+其中：
+- Q (Query): 查询矩阵
+- K (Key): 键矩阵  
+- V (Value): 值矩阵
+- d_k: 键向量的维度</code></pre>
+        </div>
+
+        <h3>关键优势</h3>
+        <ul>
+          <li><strong>长距离依赖建模</strong>：能够捕捉序列中任意两个位置之间的关系</li>
+          <li><strong>并行化训练</strong>：相比RNN大幅提升训练速度</li>
+          <li><strong>可解释性</strong>：注意力权重提供模型决策的直观解释</li>
+          <li><strong>可扩展性</strong>：易于扩展到大规模模型(如GPT、BERT)</li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="visualization" class="content-section">
+      <h2 class="section-title">
+        <span class="section-icon">🎨</span>
+        可视化演示
+      </h2>
+      
+      <!-- 演示1：注意力机制可视化 -->
+      <div class="visualization-container">
+        <div class="visualization-header">
+          <h3>演示1：注意力机制可视化</h3>
+          <p class="visualization-description">观察Transformer如何关注输入序列的不同部分</p>
+        </div>
+        <div id="transformer-demo" class="demo-area">
+          <div class="attention-demo">
+            <div class="input-sequence">
+              <h4>输入序列</h4>
+              <div class="tokens">
+                <span class="token" data-pos="0">The</span>
+                <span class="token" data-pos="1">cat</span>
+                <span class="token" data-pos="2">sat</span>
+                <span class="token" data-pos="3">on</span>
+                <span class="token" data-pos="4">the</span>
+                <span class="token" data-pos="5">mat</span>
+              </div>
+            </div>
+            
+            <div class="attention-matrix">
+              <h4>注意力权重矩阵</h4>
+              <div class="matrix-container">
+                <div class="attention-grid" id="attention-grid">
+                  <!-- 注意力矩阵将通过JavaScript动态生成 -->
+                </div>
+              </div>
+            </div>
+            
+            <div class="output-sequence">
+              <h4>输出表示</h4>
+              <div class="representations">
+                <div class="repr" data-pos="0">h₁</div>
+                <div class="repr" data-pos="1">h₂</div>
+                <div class="repr" data-pos="2">h₃</div>
+                <div class="repr" data-pos="3">h₄</div>
+                <div class="repr" data-pos="4">h₅</div>
+                <div class="repr" data-pos="5">h₆</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="controls">
+          <button class="btn btn-primary" id="compute-attention">计算注意力</button>
+          <button class="btn btn-secondary" id="highlight-token">高亮词语关系</button>
+          <button class="btn btn-secondary" id="reset-demo">重置演示</button>
+        </div>
+
+        <div class="demo-explanation">
+          <h4>🔍 注意力机制说明</h4>
+          <p>颜色深度表示注意力权重强度。当计算"cat"的表示时，模型会关注所有输入词语，但对相关词语（如"sat"、"mat"）给予更高权重。</p>
+        </div>
+      </div>
+
+      <!-- 演示2：Transformer工作流程演示 -->
+      <div class="visualization-container" style="margin-top: 3rem;">
+        <div class="visualization-header">
+          <h3>演示2：Transformer完整工作流程</h3>
+          <p class="visualization-description">逐步了解Transformer如何处理输入序列</p>
+        </div>
+        
+        <div class="transformer-pipeline">
+          <div class="pipeline-step" id="pipeline-step-1">
+            <h4>第 1 步：输入句子</h4>
+            <div class="step-content">
+              <input type="text" id="inputText" value="猫 喜欢 吃 鱼" placeholder="输入词语（用空格分隔）" class="pipeline-input">
+              <button onclick="processTransformerPipeline()" class="btn btn-primary">开始处理</button>
+            </div>
+          </div>
+
+          <div class="pipeline-step" id="pipeline-step-2" style="display:none">
+            <h4>第 2 步：词嵌入编码</h4>
+            <p class="step-description">每个词被转化为高维数字向量</p>
+            <div id="embeddingOutput" class="step-output"></div>
+          </div>
+
+          <div class="pipeline-step" id="pipeline-step-3" style="display:none">
+            <h4>第 3 步：位置编码</h4>
+            <p class="step-description">为每个向量添加位置信息，保留序列顺序</p>
+            <div id="positionOutput" class="step-output"></div>
+          </div>
+
+          <div class="pipeline-step" id="pipeline-step-4" style="display:none">
+            <h4>第 4 步：自注意力机制</h4>
+            <p class="step-description">每个词根据与其他词的关联度重新调整表示</p>
+            <div id="attentionOutput" class="step-output"></div>
+          </div>
+
+          <div class="pipeline-step" id="pipeline-step-5" style="display:none">
+            <h4>第 5 步：最终输出</h4>
+            <p class="step-description">词向量已融合整句上下文信息</p>
+            <div id="finalOutput" class="step-output"></div>
+          </div>
+        </div>
+
+        <div class="pipeline-explanation">
+          <h4>🔧 处理流程说明</h4>
+          <p>Transformer通过这5个步骤，将输入的词语序列转换为包含丰富上下文信息的向量表示。每一步都在逐渐增强模型对句子含义的理解。</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="practice" class="content-section">
+      <h2 class="section-title">
+        <span class="section-icon">🎯</span>
+        实践练习
+      </h2>
+      <div class="practice-content">
+        <div class="exercise-container">
+          <h3>练习1：构建简单的注意力机制</h3>
+          <p>理解Query、Key、Value矩阵的作用</p>
+          <div class="exercise-placeholder">
+            <p>🧮 注意力计算练习即将推出</p>
+          </div>
+        </div>
+
+        <div class="exercise-container">
+          <h3>练习2：多头注意力可视化</h3>
+          <p>观察不同注意力头关注的模式</p>
+          <div class="exercise-placeholder">
+            <p>🔍 多头注意力练习即将推出</p>
+          </div>
+        </div>
+
+        <div class="exercise-container">
+          <h3>练习3：位置编码实验</h3>
+          <p>了解位置信息如何影响模型理解</p>
+          <div class="exercise-placeholder">
+            <p>📍 位置编码练习即将推出</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="summary" class="content-section">
+      <h2 class="section-title">
+        <span class="section-icon">📝</span>
+        总结
+      </h2>
+      <div class="summary-content">
+        <div class="highlight-box">
+          <h4>🔑 关键要点</h4>
+          <ul>
+            <li><strong>注意力革命</strong>：完全基于注意力机制，抛弃了循环结构</li>
+            <li><strong>并行计算</strong>：大幅提升训练效率和模型规模</li>
+            <li><strong>长距离建模</strong>：能够捕捉序列中任意距离的依赖关系</li>
+            <li><strong>架构基础</strong>：现代大模型(GPT、BERT等)的核心架构</li>
+          </ul>
+        </div>
+        
+        <h3>🌟 重要里程碑</h3>
+        <div class="timeline">
+          <div class="timeline-item">
+            <h4>2017年</h4>
+            <p>《Attention Is All You Need》论文发布，提出Transformer架构</p>
+          </div>
+          <div class="timeline-item">
+            <h4>2018年</h4>
+            <p>BERT模型发布，展示Transformer在理解任务上的强大能力</p>
+          </div>
+          <div class="timeline-item">
+            <h4>2019年</h4>
+            <p>GPT-2发布，显示Transformer在生成任务上的潜力</p>
+          </div>
+          <div class="timeline-item">
+            <h4>2020年+</h4>
+            <p>GPT-3、GPT-4等大模型展现了前所未有的能力</p>
+          </div>
+        </div>
+
+        <h3>🚀 重要应用</h3>
+        <div class="application-grid">
+          <div class="application-item">
+            <h4>🤖 大语言模型</h4>
+            <p>GPT系列、ChatGPT、Claude等</p>
+          </div>
+          <div class="application-item">
+            <h4>🔍 搜索理解</h4>
+            <p>BERT在Google搜索中的应用</p>
+          </div>
+          <div class="application-item">
+            <h4>🌐 机器翻译</h4>
+            <p>Google Translate等翻译服务</p>
+          </div>
+          <div class="application-item">
+            <h4>🎨 多模态AI</h4>
+            <p>CLIP、DALL-E等跨模态模型</p>
+          </div>
+        </div>
+
+        <h3>💡 学习建议</h3>
+        <ol>
+          <li><strong>理解注意力机制</strong>：从数学公式开始，理解QKV的作用</li>
+          <li><strong>掌握架构细节</strong>：编码器-解码器、多头注意力、残差连接</li>
+          <li><strong>实践编程</strong>：使用PyTorch或TensorFlow实现简单的Transformer</li>
+          <li><strong>跟进发展</strong>：关注GPT、BERT等模型的最新进展</li>
+          <li><strong>理解应用</strong>：学习如何将Transformer应用到实际问题</li>
+        </ol>
+
+        <div class="next-steps">
+          <h4>🎯 进阶学习路径</h4>
+          <p>掌握Transformer后，可以深入学习：</p>
+          <ul>
+            <li><strong>BERT系列</strong>：双向编码器，理解类任务专家</li>
+            <li><strong>GPT系列</strong>：生成式预训练，语言生成专家</li>
+            <li><strong>Vision Transformer</strong>：将Transformer应用到计算机视觉</li>
+            <li><strong>优化技术</strong>：稀疏注意力、高效Transformer等</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>
+
+<!-- Transformer Pipeline JavaScript -->
+<script>
+// 模拟向量生成（实际为数百位数字，这里简化为3位）
+function wordToVector(word) {
+  // 实际模型会使用预训练的词嵌入
+  const vectors = {
+    "猫": [0.8, -0.2, 0.5],
+    "喜欢": [-0.3, 0.7, 0.1],
+    "吃": [0.1, 0.5, -0.9],
+    "鱼": [0.6, -0.4, 0.3],
+    "The": [0.7, -0.1, 0.4],
+    "cat": [0.8, -0.2, 0.5],
+    "sat": [0.2, 0.6, -0.3],
+    "on": [-0.1, 0.3, 0.8],
+    "the": [0.7, -0.1, 0.4],
+    "mat": [0.4, 0.2, -0.6]
+  };
+  return vectors[word] || [
+    (Math.random() * 2 - 1).toFixed(1), 
+    (Math.random() * 2 - 1).toFixed(1), 
+    (Math.random() * 2 - 1).toFixed(1)
+  ];
+}
+
+// 模拟位置编码（实际使用正弦函数）
+function addPosition(vector, index) {
+  const position = [index * 0.1, (index+1) * 0.2, (index+2) * 0.3];
+  return vector.map((v, i) => (parseFloat(v) + position[i]).toFixed(1));
+}
+
+// 模拟自注意力机制（简化版）
+function calculateAttention(vectors) {
+  // 实际模型使用 Q,K,V 矩阵计算
+  return vectors.map(v => v.map(num => (parseFloat(num) * 1.5).toFixed(1)));
+}
+
+// 主处理函数
+function processTransformerPipeline() {
+  const input = document.getElementById("inputText").value.split(" ").filter(word => word.trim());
+  if (input.length === 0) return;
+  
+  // 重置所有步骤
+  for (let i = 2; i <= 5; i++) {
+    document.getElementById(`pipeline-step-${i}`).style.display = 'none';
+  }
+  
+  showPipelineStep(2);
+  
+  // 1. 词 → 向量
+  const embeddings = input.map(word => wordToVector(word));
+  displayPipelineResult(input, embeddings, "embeddingOutput", "#4e8cff");
+
+  // 2. 添加位置编码
+  setTimeout(() => {
+    showPipelineStep(3);
+    const positioned = embeddings.map((vec, i) => addPosition(vec, i));
+    displayPipelineResult(input, positioned, "positionOutput", "#ff6b6b");
+    
+    // 3. 自注意力计算
+    setTimeout(() => {
+      showPipelineStep(4);
+      const attentionApplied = calculateAttention(positioned);
+      displayPipelineResult(input, attentionApplied, "attentionOutput", "#48db71");
+      
+      // 4. 最终输出
+      setTimeout(() => {
+        showPipelineStep(5);
+        const finalVectors = calculateAttention(attentionApplied);
+        displayPipelineResult(input, finalVectors, "finalOutput", "#9b59b6");
+      }, 1500);
+    }, 1500);
+  }, 1500);
+}
+
+// 通用显示函数
+function displayPipelineResult(words, vectors, elementId, color) {
+  const container = document.getElementById(elementId);
+  container.innerHTML = '';
+  words.forEach((word, i) => {
+    const div = document.createElement("div");
+    div.className = "token-vector-pair";
+    div.innerHTML = `
+      <span class="pipeline-token" style="background: ${color}">${word}</span>
+      <span class="vector-display">→ [${vectors[i].join(", ")}]</span>
+    `;
+    container.appendChild(div);
+  });
+}
+
+function showPipelineStep(stepNum) {
+  for (let i = 1; i <= stepNum; i++) {
+    document.getElementById(`pipeline-step-${i}`).style.display = 'block';
+  }
+}
+</script>
+
+<!-- 新增CSS样式 -->
+<style>
+.transformer-pipeline {
+  background: var(--background-color);
+  border-radius: 12px;
+  padding: 2rem;
+  margin: 1.5rem 0;
+}
+
+.pipeline-step {
+  background: rgba(78, 140, 255, 0.05);
+  padding: 1.5rem;
+  margin: 1rem 0;
+  border-radius: 8px;
+  border-left: 4px solid var(--accent-color);
+  transition: all 0.3s ease;
+}
+
+.pipeline-step h4 {
+  color: var(--accent-color);
+  margin-bottom: 0.5rem;
+  font-size: 1.1rem;
+}
+
+.step-description {
+  color: var(--text-secondary);
+  margin-bottom: 1rem;
+  font-size: 0.9rem;
+}
+
+.step-content {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.pipeline-input {
+  flex: 1;
+  min-width: 200px;
+  padding: 0.8rem;
+  border: 2px solid var(--border-color);
+  border-radius: 6px;
+  font-size: 1rem;
+  background: var(--card-background);
+  color: var(--text-color);
+  transition: border-color 0.3s ease;
+}
+
+.pipeline-input:focus {
+  outline: none;
+  border-color: var(--accent-color);
+}
+
+.step-output {
+  margin-top: 1rem;
+}
+
+.token-vector-pair {
+  display: flex;
+  align-items: center;
+  margin: 0.5rem 0;
+  padding: 0.5rem;
+  background: rgba(255, 255, 255, 0.5);
+  border-radius: 6px;
+}
+
+.pipeline-token {
+  display: inline-block;
+  padding: 0.4rem 0.8rem;
+  color: white;
+  border-radius: 4px;
+  margin-right: 1rem;
+  font-weight: 500;
+  min-width: 60px;
+  text-align: center;
+}
+
+.vector-display {
+  font-family: 'Courier New', monospace;
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  background: rgba(0, 0, 0, 0.05);
+  padding: 0.3rem 0.6rem;
+  border-radius: 4px;
+}
+
+.pipeline-explanation {
+  margin-top: 2rem;
+  padding: 1.5rem;
+  background: rgba(72, 219, 113, 0.1);
+  border-radius: 8px;
+  border-left: 4px solid #48db71;
+}
+
+.pipeline-explanation h4 {
+  color: #48db71;
+  margin-bottom: 0.5rem;
+}
+
+.visualization-container + .visualization-container {
+  border-top: 2px solid var(--border-color);
+  padding-top: 2rem;
+}
+
+/* 深色主题适配 */
+[data-theme="dark"] .pipeline-step {
+  background: rgba(78, 140, 255, 0.1);
+}
+
+[data-theme="dark"] .token-vector-pair {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+[data-theme="dark"] .vector-display {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+[data-theme="dark"] .pipeline-explanation {
+  background: rgba(72, 219, 113, 0.1);
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+  .step-content {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
+  .pipeline-input {
+    min-width: unset;
+  }
+  
+  .token-vector-pair {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+  
+  .pipeline-token {
+    margin-right: 0;
+  }
+}
+</style>

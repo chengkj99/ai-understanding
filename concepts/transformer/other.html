@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Transformer 工作原理可视化</title>
+  <style>
+    body { font-family: sans-serif; max-width: 800px; margin: 0 auto; }
+    .step { background: #f5f7fa; padding: 15px; margin: 10px 0; border-radius: 8px; }
+    input, button { padding: 8px; margin: 5px; }
+    #output { padding: 15px; background: #eef5ff; border-radius: 8px; }
+    .token { display: inline-block; padding: 5px 10px; background: #4e8cff; color: white; border-radius: 4px; margin: 5px; }
+    .vector { font-size: 12px; color: #666; }
+  </style>
+</head>
+<body>
+  <h1>🤖 Transformer 工作原理演示</h1>
+
+  <div class="step">
+    <h3>第 1 步：输入句子</h3>
+    <input type="text" id="inputText" value="猫 喜欢 吃 鱼" placeholder="输入词语（用空格分隔）">
+    <button onclick="processText()">开始处理</button>
+  </div>
+
+  <div class="step" id="step2" style="display:none">
+    <h3>第 2 步：词 → 向量（编码）</h3>
+    <p>每个词被转化为数字向量：</p>
+    <div id="embeddingOutput"></div>
+  </div>
+
+  <div class="step" id="step3" style="display:none">
+    <h3>第 3 步：位置编码（加顺序标记）</h3>
+    <p>为每个向量添加位置编码：</p>
+    <div id="positionOutput"></div>
+  </div>
+
+  <div class="step" id="step4" style="display:none">
+    <h3>第 4 步：自注意力机制（词语社交）</h3>
+    <p>每个词根据其他词的关联度重新调整：</p>
+    <div id="attentionOutput"></div>
+  </div>
+
+  <div class="step" id="step5" style="display:none">
+    <h3>第 5 步：最终输出（理解上下文）</h3>
+    <p>词向量已被 Transformer 更新（结合整句含义）：</p>
+    <div id="finalOutput"></div>
+  </div>
+
+  <script>
+    // 模拟向量生成（实际为数百位数字，这里简化为3位）
+    function wordToVector(word) {
+      // 实际模型会使用预训练的词嵌入
+      const vectors = {
+        "猫": [0.8, -0.2, 0.5],
+        "喜欢": [-0.3, 0.7, 0.1],
+        "吃": [0.1, 0.5, -0.9],
+        "鱼": [0.6, -0.4, 0.3]
+      };
+      return vectors[word] || [Math.random().toFixed(1), Math.random().toFixed(1), Math.random().toFixed(1)];
+    }
+
+    // 模拟位置编码（实际使用正弦函数）
+    function addPosition(vector, index) {
+      const position = [index * 0.1, (index+1) * 0.2, (index+2) * 0.3];
+      return vector.map((v, i) => (parseFloat(v) + position[i]).toFixed(1));
+    }
+
+    // 模拟自注意力机制（简化版）
+    function calculateAttention(vectors) {
+      // 实际模型使用 Q,K,V 矩阵计算
+      return vectors.map(v => v.map(num => (parseFloat(num) * 1.5).toFixed(1)));
+    }
+
+    // 主处理函数
+    function processText() {
+      const input = document.getElementById("inputText").value.split(" ");
+      showStep(2);
+      
+      // 1. 词 → 向量
+      const embeddings = input.map(word => wordToVector(word));
+      displayResult(input, embeddings, "embeddingOutput", "#4e8cff");
+
+      // 2. 添加位置编码
+      setTimeout(() => {
+        showStep(3);
+        const positioned = embeddings.map((vec, i) => addPosition(vec, i));
+        displayResult(input, positioned, "positionOutput", "#ff6b6b");
+      }, 1500);
+
+      // 3. 自注意力计算
+      setTimeout(() => {
+        showStep(4);
+        const attentionApplied = calculateAttention(embeddings);
+        displayResult(input, attentionApplied, "attentionOutput", "#48db71");
+      }, 3000);
+
+      // 4. 最终输出
+      setTimeout(() => {
+        showStep(5);
+        displayResult(input, calculateAttention(positioned), "finalOutput", "#9b59b6");
+      }, 4500);
+    }
+
+    // 通用显示函数
+    function displayResult(words, vectors, elementId, color) {
+      const container = document.getElementById(elementId);
+      container.innerHTML = '';
+      words.forEach((word, i) => {
+        const div = document.createElement("div");
+        div.innerHTML = `
+          <span class="token" style="background: ${color}">${word}</span>
+          <span class="vector">→ [${vectors[i].join(", ")}]</span>
+        `;
+        container.appendChild(div);
+      });
+    }
+
+    function showStep(stepNum) {
+      document.querySelectorAll(`.step`).forEach(el => el.style.display = 'none');
+      document.getElementById(`step${stepNum}`).style.display = 'block';
+    }
+  </script>
+</body>
+</html>
